@@ -5,10 +5,10 @@
     "main": "index.js",
     "scripts": {
         "test": "node ./test/test.js",
-        "ffmpeg-test": "ffmpeg -f dshow -video_size 1280x720 -framerate 30 -rtbufsize 100M -i video=\"HD Pro Webcam C920\" -movflags faststart -framerate 30 -vcodec mjpeg -preset veryfast -maxrate 1000000k -b:v 2M -bufsize 2M -f mjpeg -q 5 http://localhost:8082/stream.mjpeg -y -hide_banner -loglevel error",
-        "ffmpeg": "node scripts/ffmpeg-run.js",
+        "ffmpeg-test": "node scripts/ffmpeg-run.js",
         "build-dev": "webpack --mode development",
-        "build-prod": "webpack --mode production"
+        "build-prod": "webpack --mode production",
+        "postinstall": "npm run build-prod"
     },
     "keywords": [
         "camera",
@@ -26,7 +26,7 @@
         "audio",
         "recording"
     ],
-    "author": "TheRealJoe24",
+    "author": "Brandon Stevens",
     "license": "MIT",
     "dependencies": {
         "argparse": "^2.0.1",

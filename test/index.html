@@ -6,17 +6,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
     </head>
-    <body>
+    <body style="margin: 0px">
         <script src="dist/stream-client.js"></script>
-        <img src="" alt="" id="img" />
+        <img style="margin-top: 0px; position: absolute" src="" alt="" id="img" />
         <script>
             var image = document.getElementById('img');
-            var player = new CameraClient(
-                (data) => {
-                    image.src = data;
-                },
-                (chunk) => console.log(String.fromCharCode.apply(null, chunk))
-            );
+            var player = new CameraClient((data) => {
+                image.src = data;
+            });
 
             var client = new DataClient();
             client.ondata = (buf) => {

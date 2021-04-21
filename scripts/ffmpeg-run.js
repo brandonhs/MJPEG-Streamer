@@ -95,7 +95,6 @@ parse(options, (result) => {
     let n = 0;
     let key = keys[n++];
     let message = data[key].message;
-    process.stdout.write('\n');
     process.stdout.write(message);
 
     rl.on('line', (line) => {

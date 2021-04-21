@@ -1,1 +1,4 @@
-module.exports = require('./lib/stream');
+module.exports = {
+    streamer: require('./lib/stream'),
+    ffmpeg: require('./lib/ffmpeg'),
+};

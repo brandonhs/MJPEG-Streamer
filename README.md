@@ -77,21 +77,34 @@ Required dev tools
 
 ### Library Example
 
+##### Node Server
+
+In index.js, paste and run the following:
+
 ```js
-var streamer = require('./index');
-var stream = new streamer.CameraStream({
-    streamUrl: 'http://localhost:8082/stream.mjpeg',
-    width: 1920,
-    height: 1080,
-});
+var { streamer, ffmpeg } = require('node-camera-stream');
+var width = 1920,
+    height = 1080,
+    streamUrl = 'http://localhost:8082/stream.mjpeg'; // Note: the .mjpeg extension is not necessary
+
+ffmpeg({ path: 'ffmpeg', width, height, streamUrl });
+var stream = new streamer.CameraStream(ffmpeg);
 stream.listen(() => {
+    ffmpeg.run();
     var socketProtocol = new streamer.CameraSocketProtocol({
-        cameraStream: stream,
+        cameraStream: streamUrl,
         url: 'ws://localhost:9000/',
     });
     socketProtocol.start();
 });
 ```
+
+##### Running on the client
+
+Now, on that the client is running, we need to connect to it from a client.
+In this demo, we will be connecting to the server from a frontend web application.
+
+In index.html, paste the following code and host in with your favorite http server:
 
 ```html
 <!DOCTYPE html>
@@ -100,19 +113,16 @@ stream.listen(() => {
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>Node camera demo</title>
     </head>
     <body>
         <script src="dist/stream-client.js"></script>
         <img src="" alt="" id="img" />
         <script>
             var image = document.getElementById('img');
-            var player = new CameraClient(
-                (data) => {
-                    image.src = data;
-                },
-                (chunk) => console.log(String.fromCharCode.apply(null, chunk))
-            );
+            var player = new CameraClient((data) => {
+                image.src = data;
+            });
 
             var client = new DataClient({ url: 'ws://localhost:9000/' });
             client.ondata = (buf) => {
@@ -121,13 +131,4 @@ stream.listen(() => {
         </script>
     </body>
 </html>
-```
-
-```sh
-# Note: Replace HD Pro Webcam C920 with the name of your webcam
-# If you are having difficulty finding your exact camera name, run the test script with the -h option, as seen above.
-
-# TODO: Add a lib function to list devices
-ffmpeg -f dshow -video_size 1280x720 -framerate 30 -rtbufsize 100M -i video="HD Pro Webcam C920" -movflags faststart -framerate 30 -vcodec mjpeg \
--preset veryfast -maxrate 1000000k -b:v 2M -bufsize 2M -f mjpeg -q 5 http://localhost:8082/stream.mjpeg -y -hide_banner -loglevel error
 ```

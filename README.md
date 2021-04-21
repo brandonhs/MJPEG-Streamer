@@ -104,7 +104,7 @@ stream.listen(() => {
 Now, on that the client is running, we need to connect to it from a client.
 In this demo, we will be connecting to the server from a frontend web application.
 
-In index.html, paste the following code and host in with your favorite http server:
+In index.html, paste the following code and host it with your favorite http server:
 
 ```html
 <!DOCTYPE html>

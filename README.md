@@ -13,7 +13,7 @@ This repo contains a custom library for streaming high quality, compressed video
 
 ## Getting Started
 
-To get a local copy up and running, run, `git clone https://github.com/Advent-Industries/MJPEG-Streamer.git`
+To get a local copy up and running, run, `git clone https://github.com/brandonhs/MJPEG-Streamer.git`
 
 ### Prerequisites
 
@@ -29,7 +29,7 @@ Required dev tools
 
 1.  Clone the repo
     ```sh
-    git clone https://github.com/Advent-Industries/MJPEG-Streamer.git
+    git clone https://github.com/brandonhs/MJPEG-Streamer.git
     ```
 2.  Install dependencies
 
